@@ -1,0 +1,15 @@
+@(loginForm: Form[String])(implicit request: RequestHeader, flash: Flash)
+
+@import helper._
+
+<html>
+<head>
+	<title>login</title>
+</head>
+<body>
+	<form action="/login" method="POST" >
+    	<label for="username">Username: </label><input type="text" name="username" id="username" value="" />
+		<input type="submit" value="login &rarr;">
+	</form>
+</body>
+</html>

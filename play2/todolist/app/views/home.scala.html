@@ -1,0 +1,10 @@
+@()(implicit request: RequestHeader, flash: Flash)
+
+@flash.get("action")
+
+<h1>Welcome @request.session.get("username").getOrElse("Guest")</h1>
+@request.session.get("username").map {username =>
+	<a href="@routes.Application.logout()">logout</a>
+}.getOrElse {
+	<a href="@routes.Application.login()">login</a>
+}
