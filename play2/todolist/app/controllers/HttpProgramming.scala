@@ -6,6 +6,7 @@ import play.api.data._
 import play.api.data.Forms._
 import models.Task
 import play.api.libs.iteratee.Enumerator
+import scala.concurrent.Future
 
 object Application extends Controller {
 
@@ -131,7 +132,25 @@ object Application extends Controller {
     }
   }
 
-//    def cpanel = Authenticated { implicit request: Result[String] =>
-//        Ok("Welcome " + request.user.name)
-//    }  //TODO: fix cpanel
+  //    def cpanel = Authenticated { implicit request: Result[String] =>
+  //        Ok("Welcome " + request.user.name)
+  //    }  //TODO: fix cpanel
+
+  // Async
+  def async = Action {
+    import play.api.libs.concurrent.Execution.Implicits._
+    import scala.concurrent.duration._
+    val timeoutFuture = play.api.libs.concurrent.Promise.timeout("Oops", 2 seconds)
+    Async {
+      Future {
+        var i = 0
+        while (i < 10) {
+          Thread.sleep(1000)
+          i += 1
+          println(s"iteration $i")
+        }
+        i
+      }.map(i => Ok(s"result is $i"))
+    }
+  }
 }
