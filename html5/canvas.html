@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Light Ray</title>
+  </head>
+  <body>
+    <canvas id="light-ray" height=500 width=700 style="border:1px solid #000000;">
+    </canvas>
+  </body>
+  <script type="text/javascript" charset="utf-8">
+(function(){
+    var can = document.getElementById("light-ray"),
+        ctx = can.getContext('2d'),
+        wid = can.width,
+        hei = can.height,
+        ang = -90 * Math.PI/180,
+        spn = 80 * Math.PI/180,
+        ctr = {x: 200, y:200},
+        rad = 200,
+        grd = ctx.createRadialGradient(ctr.x, ctr.y, 0, ctr.x, ctr.y, rad);
+
+    grd.addColorStop(0, 'rgba(0,200,255,.25)');
+    grd.addColorStop(0.75, 'rgba(0,0,0,0.25)');
+    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grd;
+
+
+
+  (function draw(){
+    ctx.clearRect(0,0,wid,hei);
+    ang = Math.sin(new Date()/1000) * Math.PI/2;
+    spn = (Math.abs(Math.sin(new Date()/1000/3)) * 120 + 30) * Math.PI/180;
+
+    // The below code is the pertinent part
+    // the concept is that I'm drawing a radial gradient in an arc, and decreasing the span
+    // of the arc some number of times. This will create the side-to-side fading. 
+    for (var i = 2; i < 10; i+=0.1){
+      ctx.beginPath();
+      ctx.moveTo(ctr.x,ctr.y);
+      ctx.arc(ctr.x, ctr.y, rad, ang - spn/i, ang + spn/i, false);
+      ctx.closePath();
+      ctx.fill();
+    }
+    // the above code
+
+    webkitRequestAnimationFrame(draw);
+  })();
+})();
+  </script>
+</html>
