@@ -8,11 +8,33 @@ import scala.concurrent.Future
 import play.api.Play.current
 import play.api.libs.concurrent.Execution.Implicits._
 import scala.collection.mutable.{ Map => MutableMap }
+import play.api.libs.concurrent.Akka
 
 case class Task(id: Long, label: String)
 
 object Task {
 
+  //  Akka.system.scheduler.scheduleOnce(10 seconds) {
+  //    println(100.toString())
+  //  }
+
+  def print(initVal: Int): Unit = {
+    Akka.system.scheduler.scheduleOnce(10 seconds) {
+      println(s"Message from iteration: $initVal")
+    }
+        
+    Thread.sleep(10 * 1000)
+    print(initVal + 1)
+  }
+  new Thread() {
+    override def run() {
+      print(0)
+    }
+  }.start()
+
+  //  Akka.system.scheduler.schedule(0 seconds, 10 seconds)(println("hi"))
+
+  val taskActor = Akka.system.actorOf(Props[TaskActor], name = "taskactor")
   val tasks: MutableMap[Long, Task] = MutableMap.empty
   var x = 1
 
