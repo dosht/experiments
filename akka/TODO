@@ -1,0 +1,8 @@
+akka-pi-sample-remote
+akka-pi-sample remote version
+akka-kernel-sample ~run
+
+TestKit
+[error]  found   : scala.concurrent.duration.FiniteDuration
+[error]  required: akka.util.Duration
+
