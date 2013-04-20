@@ -1,4 +1,4 @@
 samples
 =======
 
-This project cashes some code samples for common problems I had before and spent a long time solving them
+This repo cashes some code samples during study and for common problems I had before and spent a long time solving them
