@@ -78,6 +78,12 @@ object SocialEngine {
         .withColumnSlice(postKey).execute.getResult.iterator // or List(postKey, ...)
     ) yield (x.getName -> x.getLongValue)) toMap
 
+  def getUserRatingFromPostRatings(username: String, postKey: String) =
+    (for (
+      x <- keyspace.prepareQuery(postRatings).getKey(postKey)
+        .withColumnSlice(postKey).execute.getResult.iterator // or List(postKey, ...)
+    ) yield (postKey -> x.getLongValue)) toMap
+
   def getPostRating(postKey: String) =
     (for (x <- keyspace.prepareQuery(ratingCounter).getKey(postKey).execute.getResult.iterator)
       yield (x.getName -> x.getLongValue)) toMap
@@ -125,6 +131,9 @@ object SocialEngineRunner extends App {
   println(s"postRating: ${postRating}")
   val userRating = SocialEngine.getUserRating("dosht", postKey)
   println(s"userRating: ${userRating}")
+  val userRatingFromPostRatings = SocialEngine.getUserRating("dosht", postKey)
+  println(s"userRatingFromPostRatings: ${userRatingFromPostRatings}")
+  println(s"Assert userRating (from UserRatings CF == from postRatings CF): ${userRating == userRatingFromPostRatings}")
   val postRatingDetailed = SocialEngine.getPostRatingDetailed(postKey)
   println(s"postRatingDetailed: ${postRatingDetailed}")
 }
