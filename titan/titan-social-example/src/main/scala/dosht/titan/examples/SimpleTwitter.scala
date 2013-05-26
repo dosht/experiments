@@ -21,15 +21,15 @@ object SimpleTwitter {
   logger.info(s"Opened Graph: ${g}")
 
   // Create vertices types
-  val timeType = g.makeType.name("time").dataType(classOf[JLong]).functional.makePropertyKey()
-  g.makeType.name("text").dataType(classOf[String]).functional.makePropertyKey()
-  g.makeType.name("name").dataType(classOf[String]).indexed.unique.functional.makePropertyKey()
-
-  // Create edges types
-  //  val timeType = g.makeType.name("time").simple.functional(false).dataType(classOf[JInteger]).makePropertyKey()
-  g.makeType.name("follows").primaryKey(timeType).makeEdgeLabel()
-  g.makeType.name("tweets").primaryKey(timeType).makeEdgeLabel()
-  g.makeType.name("streams").primaryKey(timeType).unidirected.makeEdgeLabel()
+//  val timeType = g.makeType.name("time").dataType(classOf[JLong]).functional.makePropertyKey()
+//  g.makeType.name("text").dataType(classOf[String]).functional.makePropertyKey()
+//  g.makeType.name("name").dataType(classOf[String]).indexed.unique.functional.makePropertyKey()
+//
+//  // Create edges types
+//  //  val timeType = g.makeType.name("time").simple.functional(false).dataType(classOf[JInteger]).makePropertyKey()
+//  g.makeType.name("follows").primaryKey(timeType).makeEdgeLabel()
+//  g.makeType.name("tweets").primaryKey(timeType).makeEdgeLabel()
+//  g.makeType.name("streams").primaryKey(timeType).unidirected.makeEdgeLabel()
   logger.info("Types created")
 
   def addUser(username: String) = {
