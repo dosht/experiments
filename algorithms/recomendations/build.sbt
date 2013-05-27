@@ -1,4 +1,4 @@
-name := "Similarity Recomender"
+name := "Recomendation Engines"
 
 version := "1.0"
 

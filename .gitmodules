@@ -1,3 +1,0 @@
-[submodule "akka/akka-remoting-simple-app"]
-	path = akka/akka-remoting-simple-app
-	url = git@github.com:dosht/akka-remoting-simple-app.git

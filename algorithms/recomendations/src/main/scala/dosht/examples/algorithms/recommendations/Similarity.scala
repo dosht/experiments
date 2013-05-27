@@ -3,6 +3,7 @@
  * So for each user the system should show recommended items
  * depends on items liked by other users who liked similar items to that user.
  */
+package dosht.examples.algorithms.recommendations
 
 import scala.io.Source
 import Math._

@@ -1,6 +1,5 @@
-akka-pi-sample-remote
-akka-pi-sample remote version
 akka-kernel-sample ~run
+remote sample
 
 TestKit
 [error]  found   : scala.concurrent.duration.FiniteDuration

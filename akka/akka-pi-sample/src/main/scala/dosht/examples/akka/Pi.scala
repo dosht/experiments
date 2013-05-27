@@ -1,9 +1,11 @@
-package akka.tutorial.first.scala
+package dosht.examples.akka
 
 import akka.actor._
 import akka.routing.RoundRobinRouter
 import scala.concurrent.duration._
 import scala.concurrent.duration.Duration
+import com.typesafe.config.ConfigFactory
+import akka.kernel.Bootable
 
 sealed trait PiMessage
 case object Calculate extends PiMessage
@@ -66,7 +68,3 @@ object Pi extends App {
     master ! Calculate
   }
 }
-
-object PiServer extends App {}
-
-object PiClient extends App {}

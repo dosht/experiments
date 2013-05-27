@@ -1,10 +1,8 @@
-name := "Akka Pi Calculator"
+name := "Akka Remote Sample"
 
-version := "1.0"
+version       := "0.1"
 
-scalaVersion := "2.10.1"
-
-sbtVersion := "0.12.1"
+scalaVersion  := "2.10.1"
 
 scalacOptions := Seq("-unchecked", "-deprecation", "-encoding", "utf8")
 
@@ -18,5 +16,6 @@ resolvers ++= Seq(
 libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-actor" % "2.1.2",
   "com.typesafe.akka" %% "akka-remote" % "2.1.2",
-  "com.typesafe.akka" %% "akka-kernel" % "2.1.2"
+  "com.typesafe.akka" %% "akka-kernel" % "2.1.2",
+  "log4j" % "log4j" % "1.2.14"
 )
