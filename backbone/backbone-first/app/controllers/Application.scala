@@ -3,16 +3,50 @@ package controllers
 import play.api._
 import play.api.mvc._
 import play.api.libs.json._
+import java.io._
+import scala.io._
 
 object Application extends Controller {
+  // Database
+  var database = Map[String, Map[String, JsValue]]()
+  val db = "json"
+  load()
+
+  // DB Helpers
+  implicit def StringToFile(filename: String) = new {
+    def <<(str: String) = {
+      val p = new PrintWriter(new File(filename))
+      try p.write(str)
+      finally p.close()
+    }
+  }
+
+  def save() {
+    database.foreach {
+      case (collection, jsonMap) =>
+        s"$db/$collection" << JsObject(jsonMap.toSeq).toString //TODO: user Json.prettyPrint
+    }
+  }
+
+  def load() {
+    if (new File(db).isDirectory) database = readStoredJson
+    println(database)
+  }
+
+  def readStoredJson(): Map[String, Map[String, JsValue]] =
+    new File(db).listFiles.map(f =>
+      f.getName -> Json.parse(Source.fromFile(f).getLines.reduce(_ + _)).as[JsObject].fieldSet.toMap).toMap
+
+  sys.addShutdownHook {
+    save()
+  }
+
   var currentId = -1
 
   def newId = {
     currentId += 1
     currentId
   }
-
-  var database = Map[String, Map[String, JsValue]]()
 
   def collection(implicit name: String) = database.get(name).getOrElse {
     val coll = Map[String, JsValue]()
@@ -30,10 +64,10 @@ object Application extends Controller {
     implicit request =>
       val id = s"$newId"
       database += (collName -> (collection + (id -> js)))
+      save()
       println(s"${request.method}: $collName/ -> $id\n\t [$collName]: $collection")
       Ok(Json.obj("id" -> id))
   }
-
 
   def getAll(implicit collName: String) = Action {
     implicit request =>
@@ -52,6 +86,7 @@ object Application extends Controller {
     implicit request =>
       implicit val name = collName
       database += (collName -> (collection + (id -> js)))
+      save()
       println(s"${request.method}: $collName/$id\n\t [$collName]: $collection")
       Ok(Json.obj("id" -> id))
   }
@@ -60,6 +95,7 @@ object Application extends Controller {
     request =>
       implicit val name = collName
       database += (collName -> (collection - id))
+      save()
       println(s"${request.method}: $collName/$id\n\t [$collName]: $collection")
       Ok(id)
   }
