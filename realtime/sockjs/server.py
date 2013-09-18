@@ -3,7 +3,7 @@ from sockjs.tornado import SockJSRouter, SockJSConnection
 
 class Echo(SockJSConnection):
     def on_message(self, msg):
-        print msg
+        print "received: %s" % msg
         self.send(msg)
 
 if __name__ == '__main__':

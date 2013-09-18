@@ -9,7 +9,7 @@ import scala.io.Source
 import Math._
 
 case class Item(id: Int, name: String, ratings: Map[Int, Rating]) {
-  def avaregeRating: Double = ratings.foldLeft(0.0)(_ + _._2.rating) / ratings.size
+  def averageRating: Double = ratings.foldLeft(0.0)(_ + _._2.rating) / ratings.size
   def commonUserIds(that: Item): Iterable[Int] = for (r <- ratings.values if that.ratings.isDefinedAt(r.userId)) yield r.userId
   def ratingsForItemList(userIds: Iterable[Int]): Iterable[Int] = for (uid <- userIds) yield ratings(uid).rating
 }
